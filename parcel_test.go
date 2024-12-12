@@ -53,8 +53,16 @@ func TestAddGetDelete(t *testing.T) {
 
 	// delete
 	err = store.Delete(parcel.Number)
-
+	if err != nil {
+		t.Errorf("failed to delete parcel: %v", err)
+	}
 	stored, err = store.Get(parcel.Number)
+	if err != nil {
+		t.Errorf("failed to get parcel: %v", err)
+	}
+	if stored.Number == 0 {
+		t.Errorf("parcel not found")
+	}
 	require.Equal(t, sql.ErrNoRows, err)
 }
 
